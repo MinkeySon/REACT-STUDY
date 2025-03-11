@@ -16,3 +16,10 @@
   padding: 10px;
   border-bottom: 1px solid black;
 }
+
+.modal{
+  margin-top:20px;
+  padding:20px;
+  background:#eee;
+  text-align: left;
+}

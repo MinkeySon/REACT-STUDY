@@ -4,17 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-
   let post = "강남 우동 맛집";
   let logo = 'React Logo';
 
-  let [t1, a] = useState(['여자 코트 추천','강남 우동 맛집','파이썬 독학']);
-  let [heart, h] = useState(0);
-
-  function like(){
-    console.log(1);
-  }
-
+  let [t, setT] = useState(['여자 코트 추천','강남 우동 맛집','파이썬 독학']);
+  let [heart, setHeart] = useState(Array(t.length).fill(0)); // t개수 만큼 array 생김
+  let [modal, setModal] = useState(false);
   return (
     <div>
       <div className = "header">
@@ -22,30 +17,46 @@ function App() {
       </div>
       
       <button onClick={()=>{
-        let copy = [...t1];
+        let copy = [...t];
         copy.sort();
         a(copy);
       }}>가나다순정렬</button>
 
-      <div className='list'>
-        <h4>{t1[0]} <span onClick={()=>{h(heart + 1)}}>❤</span> {heart} </h4>
-        <p>2월 7일 발행</p>
-        <span onClick={()=>{
-          let copy = [...t1];
-          copy[0] = '남자 코트 추천';
-          a(copy);
-          }}>change btn</span>
-        </div>
-        <div className='list'>
-        <h4>{t1[1]}</h4>
-        <p>2월 7일 발행</p>
-        </div>
-        <div className='list'>
-        <h4>{t1[2]}</h4>
-        <p>2월 7일 발행</p>
-        </div>
+
+      {
+        t.map(function(a, i) {
+          return (
+            <div className='list' key={i}>
+              <h4 onClick={()=>{setModal(true)}}>
+                {t[i]} <span onClick={()=>{
+                  let myHeart = [...heart];
+                  myHeart[i] += 1;
+                  setHeart(myHeart);
+                  }}>❤</span> 
+                  {heart[i]}
+                </h4>
+              <p>2월 7일 발행</p>
+            </div>
+          )
+        })
+      }
+        
+        {
+          modal == true ? <Modal/> : null
+        }
+
   </div>
   );
+}
+
+function Modal(){
+  return(
+    <div className='modal'>
+          <h4>제목</h4>
+          <p>날짜</p>
+          <p>상세내용</p>
+      </div>
+  )
 }
 
 export default App
